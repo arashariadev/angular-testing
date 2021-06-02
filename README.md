@@ -1,7 +1,7 @@
 
 ## Angular Testing
 
-This course repository is updated to Angular v12, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
+This repository is updated to Angular v12, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
 
 # Installing the Angular CLI
 
