@@ -12,7 +12,7 @@ With the following command the angular-cli will be installed globally in your ma
 
 # How To run this app
 
-Its also possible to install the modules as usual using npm:
+Its also possible to install the modules using the following command:
 
     npm install 
 
