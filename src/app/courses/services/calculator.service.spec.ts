@@ -3,22 +3,24 @@ import { LoggerService } from "./logger.service";
 
 describe('Calcultor Service', () => {
 
+  let calculator: CalculatorService,
+      loggerSpy: any;
+
+  beforeEach(() => {
+    loggerSpy = jasmine.createSpyObj('LoggerService', ['log']);
+    calculator = new CalculatorService(loggerSpy);
+  });
+
   it('Should add two numbers', () => {
-    const logger = jasmine.createSpyObj('LoggerService', ['log']);
-    // spyOn(logger, 'log');
-
-    const calculator = new CalculatorService(logger);
-
     const result = calculator.add(2, 2);
     expect(result).toBe(4, 'unexpected addition results');
-    expect(logger.log).toHaveBeenCalledTimes(1);
+    expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 
   it('Should subtract two numbers', () => {
-    const calculator = new CalculatorService(new LoggerService());
-
     const result = calculator.subtract(6, 4);
     expect(result).toBe(2, 'unexpected subtraction results');
+    expect(loggerSpy.log).toHaveBeenCalledTimes(1);
   });
 
 });
