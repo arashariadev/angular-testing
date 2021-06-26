@@ -38,6 +38,23 @@ describe('coursesService', () => {
       const req = httpTestingController.expectOne('/api/courses');
       expect(req.request.method).toEqual('GET', 'findAllCourses is not GET method');
       req.flush({payload: Object.values(COURSES)});
+      httpTestingController.verify(); //to verify only intented req is going, not other
+  });
+
+  it('should find a course by ID', () => {
+    coursesService.findCourseById(12)
+      .subscribe(course => {
+
+        expect(course).toBeTruthy('No course with ID 12');
+
+        expect(course).toBe(12, 'Course ID is not 12');
+
+      });
+
+      const req = httpTestingController.expectOne('api/courses/12');
+      expect(req.request.method).toEqual('GET', 'findAllCourses is not GET method');
+      req.flush(COURSES[12]);
+      httpTestingController.verify();
   });
 
 });
