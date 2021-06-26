@@ -1,5 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing"
+import { HttpErrorResponse } from "@angular/common/http";
 
 import { CoursesService } from "./courses.service";
 import { COURSES } from "../../../../server/db-data";
@@ -76,6 +77,23 @@ describe('coursesService', () => {
         ...COURSES[12],
         ...changes
       });
+  });
+
+  it('should give an "error", if save course fails', () => {
+
+    const changes: Partial<Course> = {titles: {description: 'Testing course is this'}};
+
+    coursesService.saveCourse(12, changes)
+      .subscribe( () => fail('The save course operation has failed!'),
+      (error: HttpErrorResponse) => {
+        expect(error.status).toBe(500, 'Error status code is not 500');
+      }
+      );
+
+      const req = httpTestingController.expectOne('/api/courses/12');
+      expect(req.request.method).toEqual('PUT');
+      req.flush('Save course failed', {status: 500, statusText: 'Internal Server Error'});
+
   });
 
   afterEach(() => {
