@@ -13,10 +13,25 @@ import {setupCourses} from '../common/setup-test-data';
 
 describe('CoursesCardListComponent', () => {
 
+  let component: CoursesCardListComponent;
+  let fixture: ComponentFixture<CoursesCardListComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        CoursesModule   //we're importing full 'CoursesModule' without defining in 'providers' array as dependency is more like angular material components, etc
+      ]
+    })
+    .compileComponents()
+    .then(() => {
+      fixture = TestBed.createComponent(CoursesCardListComponent);
+      component = fixture.componentInstance;
+    });
+  });
 
   it("should create the component", () => {
 
-   pending();
+    expect(component).toBeTruthy('Component "CoursesCardListComponent" is not created!')
 
   });
 
