@@ -47,11 +47,11 @@ describe('coursesService', () => {
 
         expect(course).toBeTruthy('No course with ID 12');
 
-        expect(course).toBe(12, 'Course ID is not 12');
+        expect(course.id).toBe(12, 'Course ID is not 12');
 
       });
 
-      const req = httpTestingController.expectOne('api/courses/12');
+      const req = httpTestingController.expectOne('/api/courses/12');
       expect(req.request.method).toEqual('GET', 'findAllCourses is not GET method');
       req.flush(COURSES[12]);
 
