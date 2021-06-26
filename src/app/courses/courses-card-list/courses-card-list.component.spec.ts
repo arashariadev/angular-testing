@@ -41,9 +41,12 @@ describe('CoursesCardListComponent', () => {
   it("should display the course list", () => {
 
     component.courses = setupCourses();
+    // console.log(el.nativeElement.outerHTML); // to debug in test
+    fixture.detectChanges(); // to modify the data after receiving 
+
     const cards = el.queryAll(By.css('.course-card'));
     expect(cards).toBeTruthy('Unable to find the cards with class name "course-card"');
-    expect(cards.length).toEqual(12, 'Unexpected number of cards!'); // total number of courses in test data file
+    expect(cards.length).toEqual(12, 'Unexpected number of cards'); // total number of courses in test data file
 
   });
 
