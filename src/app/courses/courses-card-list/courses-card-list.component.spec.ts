@@ -16,7 +16,7 @@ describe('CoursesCardListComponent', () => {
   let component: CoursesCardListComponent;
   let fixture: ComponentFixture<CoursesCardListComponent>;
 
-  beforeEach(() => {
+  beforeEach(async( () => {
     TestBed.configureTestingModule({
       imports: [
         CoursesModule   //we're importing full 'CoursesModule' without defining in 'providers' array as dependency is more like angular material components, etc
@@ -27,7 +27,7 @@ describe('CoursesCardListComponent', () => {
       fixture = TestBed.createComponent(CoursesCardListComponent);
       component = fixture.componentInstance;
     });
-  });
+  }));
 
   it("should create the component", () => {
 
