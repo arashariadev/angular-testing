@@ -38,7 +38,7 @@ describe('coursesService', () => {
       const req = httpTestingController.expectOne('/api/courses');
       expect(req.request.method).toEqual('GET', 'findAllCourses is not GET method');
       req.flush({payload: Object.values(COURSES)});
-      httpTestingController.verify(); //to verify only intented req is going, not other
+      
   });
 
   it('should find a course by ID', () => {
@@ -54,7 +54,13 @@ describe('coursesService', () => {
       const req = httpTestingController.expectOne('api/courses/12');
       expect(req.request.method).toEqual('GET', 'findAllCourses is not GET method');
       req.flush(COURSES[12]);
-      httpTestingController.verify();
+
+  });
+
+  afterEach(() => {
+
+    httpTestingController.verify(); //to verify only intented req is going, not other
+
   });
 
 });
