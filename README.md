@@ -54,3 +54,4 @@ ng test --no-watch
 
 * [Jasmine](https://jasmine.github.io/index.html "Jasmine Official Documents")
 * [Angular Official Test Docs](https://angular.io/guide/testing "Angular Official Test Documents")
+* [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame "MDN Web Doc - Window.requestAnimationFrame()")
