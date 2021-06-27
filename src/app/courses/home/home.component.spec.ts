@@ -90,7 +90,7 @@ describe('HomeComponent', () => {
   });
 
 
-  it("should display advanced courses when tab clicked", () => {
+  it("should display advanced courses when tab clicked", (done: DoneFn) => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()));
     fixture.detectChanges();
@@ -101,17 +101,13 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
 
     // to overcome 'Window.requestAnimationFrame()' animation (Asynchronous event), we are waiting for 500 ms
-    // Test will get passed, but the following error will occur at console:
-
-    // Uncaught Error: 'expect' was used when there was no current spec, this could be because an asynchronous test timed out
-
-    // actually as these test assertions are present inside the 'setTimeout()', test runner exited the block without considering these
-    // assertions and considered the test as passed(so it did not check). So in later stage, it's complaining as 'expect' is there without any test case
+    // DoneFn is added to make the test runner to wait till it's called.
 
     setTimeout(() => {
       const cardTitles = el.queryAll(By.css('.mat-card-title'));
       expect(cardTitles.length).toBeGreaterThan(0, 'Could not find titles in advanced tab');
       expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course', 'Course Title is different!');
+      done();
     }, 500);
 
 
