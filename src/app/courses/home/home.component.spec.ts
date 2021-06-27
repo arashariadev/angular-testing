@@ -22,8 +22,24 @@ describe('HomeComponent', () => {
   let component:HomeComponent;
   let el: DebugElement;
 
-  beforeEach((() => {
+  beforeEach(async( () => { //async test utitilty
 
+    const coursesServSpy = jasmine.createSpyObj('CoursesService', ['findAllCourses']);
+
+    TestBed.configureTestingModule({
+      imports: [
+        CoursesModule,
+        NoopAnimationsModule  // imports no operational animations module; it's necessary as component has animation module, but we don't want in testing
+      ],
+      providers: [
+        {provide: CoursesService, useValue: coursesServSpy} // overriding original services by fake spy
+      ]
+    }).compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(HomeComponent);
+        component = fixture.componentInstance;
+        el = fixture.debugElement;
+      });
 
   }));
 
