@@ -1,6 +1,8 @@
 import { fakeAsync, tick, flush, flushMicrotasks } from "@angular/core/testing";
+import { of } from "rxjs/internal/observable/of";
+import { delay } from "rxjs/operators";
 
-fdescribe('Async testing examples', () => {
+describe('Async testing examples', () => {
 
   it('Async test example with done function', (done: DoneFn) => {
     let test: boolean = false;
@@ -53,6 +55,7 @@ fdescribe('Async testing examples', () => {
     expect(test).toBeTruthy();
   }));
 
+  // Async using both micro & macro tasks  
   it('Async test example - with promise and setTimeout', fakeAsync(() => {
     let counter: number = 0;
 
@@ -71,8 +74,33 @@ fdescribe('Async testing examples', () => {
     expect(counter).toBe(10);
     tick(500);
     expect(counter).toBe(11);
-
   }));
 
+  // observable in synchronous test case
+  it('test case - observable as synchronous', () => {
+    let test: boolean = false;
+
+    const test$ = of(test);
+
+    test$.subscribe(() => {
+      test = true;
+    });
+
+    expect(test).toBeTruthy();
+  });
+
+  // observable in asynchronous test case
+  it('async test case - observable', fakeAsync(() => {
+    let test: boolean = false;
+
+    const test$ = of(test).pipe(delay(1000));
+
+    test$.subscribe(() => {
+      test = true;
+    });
+
+    tick(1000); // flush() & flushMicrotasks() won't work
+    expect(test).toBeTruthy();
+  }));
 
 });
