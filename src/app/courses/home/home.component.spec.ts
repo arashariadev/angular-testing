@@ -90,7 +90,7 @@ describe('HomeComponent', () => {
   });
 
 
-  it("should display advanced courses when tab clicked", (done: DoneFn) => {
+  it("should display advanced courses when tab clicked", fakeAsync(() => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()));
     fixture.detectChanges();
@@ -99,20 +99,13 @@ describe('HomeComponent', () => {
     // el.nativeElement.click();
     click(tabs[1]); // simulating click on the second button (advanced tab)
     fixture.detectChanges();
+    flush();
 
-    // to overcome 'Window.requestAnimationFrame()' animation (Asynchronous event), we are waiting for 500 ms
-    // DoneFn is added to make the test runner to wait till it's called.
+    const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'));
+    expect(cardTitles.length).toBeGreaterThan(0, 'Could not find titles in advanced tab');
+    expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course', 'Course Title is different!');
 
-    setTimeout(() => {
-      const cardTitles = el.queryAll(By.css('.mat-card-title'));
-      expect(cardTitles.length).toBeGreaterThan(0, 'Could not find titles in advanced tab');
-      expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course', 'Course Title is different!');
-      done();
-    }, 500);
-
-
-
-  });
+  }));
 
 });
 
