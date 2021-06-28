@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed, waitForAsync} from '@angular/core/testing';
 import {CoursesModule} from '../courses.module';
 import {DebugElement} from '@angular/core';
 
@@ -25,7 +25,7 @@ describe('HomeComponent', () => {
   const beginnerCourses = setupCourses().filter(course => course.category === 'BEGINNER');
   const advancedCourses = setupCourses().filter(course => course.category === 'ADVANCED');
 
-  beforeEach(async( () => { //async test utitilty
+  beforeEach(waitForAsync( () => { //waitForAsync test utitilty
 
     const coursesServSpy = jasmine.createSpyObj('CoursesService', ['findAllCourses']);
 
@@ -90,7 +90,7 @@ describe('HomeComponent', () => {
   });
 
 
-  it("should display advanced courses when tab clicked", fakeAsync(() => {
+  it("should display advanced courses when tab clicked - fakeAsync", fakeAsync(() => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()));
     fixture.detectChanges();
@@ -104,6 +104,25 @@ describe('HomeComponent', () => {
     const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'));
     expect(cardTitles.length).toBeGreaterThan(0, 'Could not find titles in advanced tab');
     expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course', 'Course Title is different!');
+  }));
+
+  it("should display advanced courses when tab clicked - waitForAsync", waitForAsync(() => {
+
+    coursesService.findAllCourses.and.returnValue(of(setupCourses()));
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css('.mat-tab-label'));
+    
+    click(tabs[1]);
+    fixture.detectChanges();
+    // to run the assertions when it becomes stable. 'cuz waitForAsync won't allow to get the full control like fakeAsync by using flush or tick
+    // Prior to angular 10, waitForAsync was called as async
+    // waitForAsync supports actual http call where as fakeAsync doesn't
+    fixture.whenStable().then(() => {
+      const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'));
+      expect(cardTitles.length).toBeGreaterThan(0, 'Could not find titles in advanced tab');
+      expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course', 'Course Title is different!');
+    });
 
   }));
 
