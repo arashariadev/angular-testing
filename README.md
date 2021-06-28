@@ -57,3 +57,4 @@ ng test --no-watch
 * [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame "MDN Web Doc - Window.requestAnimationFrame()")
 * [Angular - zone js (GitHub)](https://github.com/angular/angular/tree/master/packages/zone.js)
 * [Angular zonejs](https://angular.io/guide/zone)
+* [Renaming async to waitForAsync - GitHub](https://github.com/angular/angular/pull/37583 "Renaming async to waitForAsync")
